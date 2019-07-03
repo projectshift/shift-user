@@ -1,0 +1,52 @@
+#!/usr/bin/env python3
+import click
+
+# -----------------------------------------------------------------------------
+# Group setup
+# -----------------------------------------------------------------------------
+
+
+@click.group(help='shiftuser development commands')
+def cli():
+    pass
+
+
+# -----------------------------------------------------------------------------
+# Commands
+# -----------------------------------------------------------------------------
+
+@cli.command(name='importable')
+def importable():
+    """ Make shiftuser module importable"""
+    import site
+    import os
+
+    pth = 'shiftuser.pth'
+    dst = os.path.join(site.getsitepackages()[0], pth)
+    if os.path.exists(dst):
+        print('Destination path file exists! {}\n'.format(dst))
+        return
+
+    import_from_here = os.path.dirname(os.path.realpath(__file__))
+    with open(dst, 'a') as file:
+        file.write('{}\n'.format(import_from_here))
+
+
+
+@cli.command(name='build')
+def build():
+    """ Build with setuptools"""
+    pass
+
+
+@cli.command(name='publish')
+def publish():
+    """ Publish to PyPI with twine"""
+    pass
+
+# -----------------------------------------------------------------------------
+# And run
+# -----------------------------------------------------------------------------
+
+
+cli()
