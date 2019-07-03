@@ -4,11 +4,11 @@ from flask_principal import identity_loaded, UserNeed, RoleNeed
 from flask_principal import Identity, AnonymousIdentity
 import logging
 
-from boiler.user import exceptions as x
-from boiler.user.session_interface import BoilerSessionInterface
-from boiler.user.services import login_manager, oauth, principal
-from boiler.user.services import user_service
-from boiler.user.util.oauth_providers import OauthProviders
+from shiftuser import exceptions as x
+from shiftuser.session_interface import BoilerSessionInterface
+from shiftuser.services import login_manager, oauth, principal
+from shiftuser.services import user_service
+from shiftuser.util.oauth_providers import OauthProviders
 
 
 def users_feature(app):
