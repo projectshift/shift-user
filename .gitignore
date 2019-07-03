@@ -1,0 +1,49 @@
+# os specific files
+.DS_Store
+ehthumbs.db
+Thumbs.db
+__pycache__
+
+# ide ignores
+.buildpath
+.project
+.settings
+.idea
+nbproject
+www.esproj
+
+# virtual environment
+/env
+
+
+# build ignores
+/build
+/dist
+/data
+/*.egg-info
+.coverage
+/config.yml
+
+
+
+# install ignores
+/dist.gitignore
+/config
+/LICENSE
+/migrations
+/nose.ini
+/backend
+/requirements
+/requirements.txt
+/var
+/uwsgi.ini
+/wsgi.py
+/cli
+/web
+/.env
+/dist.env
+/boil
+
+# temporary ignores for extracting users into separate package
+/shiftuser
+

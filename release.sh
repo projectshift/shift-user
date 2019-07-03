@@ -1,11 +1,11 @@
 #!/bin/bash
 
-source env/bin/activate
+source ../env/bin/activate
 
 # remove previous build
 rm -rf build
 rm -rf dist
-rm -rf shiftboiler.egg-info
+rm -rf shiftuser.egg-info
 
 ./setup.py clean
 ./setup.py sdist

@@ -23,8 +23,7 @@ from setuptools import find_packages
 # ----------------------------------------------------------------------------
 
 # project version
-from boiler.version import version as boiler_version
-version = boiler_version
+from .shiftuser.version import version as package_version
 
 # development status
 # dev_status = '1 - Planning'
@@ -55,10 +54,10 @@ setup(**dict(
     author_email='dmitrybelyakov@gmail.com',
 
     # project meta
-    name='shiftboiler',
-    version=version,
+    name='shifuser',
+    version=package_version,
     url=repo,
-    download_url=repo + '/archive/v' + version + '.tar.gz',
+    download_url=repo + '/archive/v' + package_version + '.tar.gz',
     description=description,
     long_description=long_description,
     long_description_content_type='text/markdown',  # This is important!
@@ -66,12 +65,10 @@ setup(**dict(
         'python3',
         'flask',
         'click',
-        'orm',
-        'sqlalchemy',
-        'webapp',
-        'api',
-        'oauth',
-        'babel',
+        'users',
+        'auth',
+        'rbac',
+        'oauth2',
     ],
 
     # classifiers
@@ -107,18 +104,11 @@ setup(**dict(
     # include none-code data files from manifest.in (http://goo.gl/Uf0Yxc)
     include_package_data=True,
 
-    # project dependencies
-    install_requires=[
-        'click>=7.0.0,<8.0.0',
-        'shiftschema>=0.2.5,<0.3.0',
-    ],
-
-    # entry points
-    entry_points=dict(
-        console_scripts=[
-            'boiler = boiler.cli.boiler:cli'
-        ]
-    ),
+    # # project dependencies
+    # install_requires=[
+    #     'click>=7.0.0,<8.0.0',
+    #     'shiftschema>=0.2.5,<0.3.0',
+    # ],
 
 
     # project license

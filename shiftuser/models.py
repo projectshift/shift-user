@@ -2,11 +2,11 @@ import datetime, jwt
 from hashlib import md5
 from sqlalchemy.ext.hybrid import hybrid_property
 from flask import current_app
-from boiler.user import exceptions as x
+from shiftuser import exceptions as x
 
 from shiftschema.schema import Schema
 from shiftschema import validators, filters
-from boiler.user import validators as user_validators
+from shiftuser import validators as user_validators
 from boiler.feature.orm import db
 
 # association table
