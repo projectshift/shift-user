@@ -3,6 +3,10 @@ Extensible user registration and [authentication](https://flask-login.readthedoc
 Provides support RBAC and access control with [Principal](http://pythonhosted.org/Flask-Principal/)
 
 
+**Important note:** although the codebase is pretty mature it is currently in
+the process of being migrated to a separate project (this one). Use with caution.
+
+
 ## enabling users feature
 To enable the feature run the code below at bootstrap time passing it an instance
 of you flask application
