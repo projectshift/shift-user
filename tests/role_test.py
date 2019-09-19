@@ -1,8 +1,8 @@
 from unittest import mock
 from nose.plugins.attrib import attr
 from tests.base_testcase import BoilerTestCase
-from boiler.user.events import events
-from boiler.user.models import Role, RoleSchema
+from shiftuser.events import events
+from shiftuser.models import Role, RoleSchema
 
 
 @attr('role', 'model')

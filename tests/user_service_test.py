@@ -8,11 +8,11 @@ from flask import session
 from shiftschema.result import Result
 
 from boiler.feature.mail import mail
-from boiler.user.services import user_service, role_service
-from boiler.user import events, exceptions as x
-from boiler.user.events import events as user_events
-from boiler.user.models import User, Role
-from boiler.user.user_service import UserService
+from shiftuser.services import user_service, role_service
+from shiftuser import events, exceptions as x
+from shiftuser.events import events as user_events
+from shiftuser.models import User, Role
+from shiftuser.user_service import UserService
 from boiler.config import DefaultConfig
 from boiler import bootstrap
 

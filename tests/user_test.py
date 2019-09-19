@@ -6,9 +6,9 @@ import jwt
 from datetime import datetime, timedelta
 from boiler.config import DefaultConfig
 from boiler import bootstrap
-from boiler.user.models import User, Role
-from boiler.user import events, exceptions as x
-from boiler.user.services import role_service
+from shiftuser.models import User, Role
+from shiftuser import events, exceptions as x
+from shiftuser.services import role_service
 
 
 @attr('user', 'model')

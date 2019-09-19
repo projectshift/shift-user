@@ -324,7 +324,7 @@ class User(db.Model):
     @password.setter
     def password(self, password):
         """ Encode a string and set as password """
-        from boiler.user.util.passlib import passlib_context
+        from shiftuser.util.passlib import passlib_context
         password = str(password)
         encrypted = passlib_context.encrypt(password)
         self._password = encrypted
@@ -334,7 +334,7 @@ class User(db.Model):
         if self.password is None:
             return False
 
-        from boiler.user.util.passlib import passlib_context
+        from shiftuser.util.passlib import passlib_context
         return passlib_context.verify(str(password), self.password)
 
     def generate_password_link(self):

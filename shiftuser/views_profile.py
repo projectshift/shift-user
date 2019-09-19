@@ -3,10 +3,10 @@ from flask import request
 from flask.views import View
 from flask_login import current_user, login_required
 
-from boiler.user.forms import ChangeEmailForm, ChangePasswordForm
-from boiler.user.models import UpdateSchema
-from boiler.user import views_social as social
-from boiler.user.services import user_service, oauth
+from shiftuser.forms import ChangeEmailForm, ChangePasswordForm
+from shiftuser.models import UpdateSchema
+from shiftuser import views_social as social
+from shiftuser.services import user_service, oauth
 
 from boiler.feature.navigation import navigation
 

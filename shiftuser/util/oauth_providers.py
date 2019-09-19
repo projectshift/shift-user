@@ -1,5 +1,5 @@
 from flask import session
-from boiler.user.services import oauth
+from shiftuser.services import oauth
 
 
 class OauthProviders:

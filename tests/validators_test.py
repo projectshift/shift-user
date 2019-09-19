@@ -1,9 +1,9 @@
 from nose.plugins.attrib import attr
 from tests.base_testcase import BoilerTestCase
 
-from boiler.user import validators, events
-from boiler.user.models import User, Role
-from boiler.user.services import role_service, user_service
+from shiftuser import validators, events
+from shiftuser.models import User, Role
+from shiftuser.services import role_service, user_service
 
 
 @attr('role', 'validator', 'uniquehandle')

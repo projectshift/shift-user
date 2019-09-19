@@ -2,9 +2,9 @@ from nose.plugins.attrib import attr
 from tests.base_testcase import BoilerViewTestCase
 
 from flask import url_for
-from boiler.user import events
-from boiler.user import views
-from boiler.user.services import user_service
+from shiftuser import events
+from shiftuser import views
+from shiftuser.services import user_service
 
 
 @attr('user', 'views')

@@ -4,8 +4,8 @@ from tests.base_testcase import BoilerTestCase
 
 from boiler import bootstrap
 from boiler.config import DefaultConfig
-from boiler.user import exceptions as x
-from boiler.user.services import user_service
+from shiftuser import exceptions as x
+from shiftuser.services import user_service
 
 
 @attr('feature', 'user')

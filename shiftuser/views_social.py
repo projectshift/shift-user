@@ -4,9 +4,9 @@ from flask import render_template, request, url_for, flash, redirect, session
 from flask import abort, current_app
 from flask_login import current_user
 
-from boiler.user import exceptions as x
-from boiler.user.models import RegisterSchema
-from boiler.user.services import oauth, user_service
+from shiftuser import exceptions as x
+from shiftuser.models import RegisterSchema
+from shiftuser.services import oauth, user_service
 from pprint import pprint as pp
 
 """

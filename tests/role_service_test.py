@@ -3,10 +3,10 @@ from nose.plugins.attrib import attr
 from tests.base_testcase import BoilerTestCase
 from shiftschema.result import Result
 
-from boiler.user.role_service import RoleService
-from boiler.user.services import role_service
-from boiler.user.models import Role
-from boiler.user import events
+from shiftuser.role_service import RoleService
+from shiftuser.services import role_service
+from shiftuser.models import Role
+from shiftuser import events
 
 
 @attr('role', 'service')

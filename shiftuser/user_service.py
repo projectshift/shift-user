@@ -13,9 +13,9 @@ from flask_principal import AnonymousIdentity
 from boiler.feature.orm import db
 from boiler.feature.mail import mail
 from boiler.abstract.abstract_service import AbstractService
-from boiler.user.models import User, RegisterSchema, UpdateSchema
-from boiler.user import events, exceptions as x
-from boiler.user import event_handlers # required to connect handlers
+from shiftuser.models import User, RegisterSchema, UpdateSchema
+from shiftuser import events, exceptions as x
+from shiftuser import event_handlers # required to connect handlers
 
 
 class UserService(AbstractService):
@@ -51,7 +51,7 @@ class UserService(AbstractService):
         Initialise from flask app
         This gets configuration values from a flask application.
         :param app: flask.Flask
-        :return: boiler.user.user_servce.UserService
+        :return: shiftuser.user_servce.UserService
         """
         cfg = app.config
         self.welcome_message = cfg.get('USER_SEND_WELCOME_MESSAGE')
@@ -249,7 +249,7 @@ class UserService(AbstractService):
         as your token has user_id claim in it.
 
         :param token: str, user token
-        :return: boiler.user.models.User
+        :return: shiftuser.models.User
         """
         if not self.jwt_loader_implementation:
             return self.default_token_user_loader(token)
@@ -319,7 +319,7 @@ class UserService(AbstractService):
         all is good, returns user record, otherwise throws an exception.
 
         :param token: str, token string
-        :return: boiler.user.models.User
+        :return: shiftuser.models.User
         """
         try:
             data = self.decode_token(token)
@@ -364,7 +364,7 @@ class UserService(AbstractService):
         :param user_data: dic, populate user with data
         :param send_welcome: bool, whether to send welcome or skip it (testing)
         :param base_confirm_url: str, base confirmation link url
-        :return: boiler.user.models.User
+        :return: shiftuser.models.User
         """
         user = self.__model__(**user_data)
         schema = RegisterSchema()
@@ -472,13 +472,13 @@ class UserService(AbstractService):
         The email will be sent to the new email address to verify the user has
         access to it. Important: please be sure to password-protect this.
 
-        :param user: boiler.user.models.User
+        :param user: shiftuser.models.User
         :param new_email: str, new email
         :param base_confirm_url: str, base url for confirmation links
         :param send_message: bool, send email or skip
         :return: None
         """
-        from boiler.user.models import UpdateSchema
+        from shiftuser.models import UpdateSchema
         schema = UpdateSchema()
         user.email = new_email
         valid = schema.validate(user)
@@ -539,7 +539,7 @@ class UserService(AbstractService):
 
     def change_password(self, user, new_password):
         """ Change user password and logout """
-        from boiler.user.models import UpdateSchema
+        from shiftuser.models import UpdateSchema
         from flask_login import logout_user
 
         schema = UpdateSchema()

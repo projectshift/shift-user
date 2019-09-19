@@ -8,7 +8,7 @@ class UniqueUserProperty(AbstractValidator):
 
     def validate(self, value, model=None, context=None):
         """ Perform validation """
-        from boiler.user.services import user_service
+        from shiftuser.services import user_service
 
         self_id = None
         if model:
@@ -38,7 +38,7 @@ class UniqueRoleHandle(AbstractValidator):
 
     def validate(self, value, model=None, context=None):
         """ Perform validation """
-        from boiler.user.services import role_service
+        from shiftuser import role_service
 
         self_id = None
         if model:
