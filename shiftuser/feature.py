@@ -5,11 +5,13 @@ from flask_principal import Identity, AnonymousIdentity
 import logging
 
 from shiftuser import exceptions as x
-from shiftuser.session_interface import BoilerSessionInterface
+from shiftuser.session_interface import SessionInterface
 from shiftuser.services import login_manager, oauth, principal
 from shiftuser.services import user_service
 from shiftuser.util.oauth_providers import OauthProviders
 
+
+# TODO: set up path to default user templates
 
 def users_feature(app):
     """
@@ -23,7 +25,7 @@ def users_feature(app):
         raise x.JwtSecretMissing('Please set USER_JWT_SECRET in config')
 
     # use custom session interface
-    app.session_interface = BoilerSessionInterface()
+    app.session_interface = SessionInterface()
 
     # init user service
     user_service.init(app)

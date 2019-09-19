@@ -1,6 +1,6 @@
 from unittest import mock
 from nose.plugins.attrib import attr
-from tests.base_testcase import BoilerTestCase
+from tests.base_testcase import BaseTestCase
 
 import jwt
 from datetime import datetime, timedelta
@@ -21,12 +21,14 @@ def custom_token_implementation(user_id):
     """ Custom JWT implementation """
     return 'CUSTOM TOKEN FOR [{}]'.format(user_id)
 
+
 def custom_token_loader(token):
     """ Custom JWT token user loader implementation """
     return 'LOADED USER FROM TOKEN [{}]'.format(token)
 
+
 @attr('user', 'service')
-class UserServiceTests(BoilerTestCase):
+class UserServiceTests(BaseTestCase):
 
     def setUp(self):
         super().setUp()

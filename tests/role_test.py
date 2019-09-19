@@ -1,12 +1,12 @@
 from unittest import mock
 from nose.plugins.attrib import attr
-from tests.base_testcase import BoilerTestCase
+from tests.base_testcase import BaseTestCase
 from shiftuser.events import events
 from shiftuser.models import Role, RoleSchema
 
 
 @attr('role', 'model')
-class RoleTests(BoilerTestCase):
+class RoleTests(BaseTestCase):
 
     def setUp(self):
         super().setUp()

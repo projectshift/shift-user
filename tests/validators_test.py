@@ -1,5 +1,5 @@
 from nose.plugins.attrib import attr
-from tests.base_testcase import BoilerTestCase
+from tests.base_testcase import BaseTestCase
 
 from shiftuser import validators, events
 from shiftuser.models import User, Role
@@ -7,7 +7,7 @@ from shiftuser.services import role_service, user_service
 
 
 @attr('role', 'validator', 'uniquehandle')
-class UniqueRoleHandleTest(BoilerTestCase):
+class UniqueRoleHandleTest(BaseTestCase):
     def setUp(self):
         super().setUp()
         self.create_db()
@@ -36,7 +36,7 @@ class UniqueRoleHandleTest(BoilerTestCase):
 
 
 @attr('user', 'validator', 'uniqueemail')
-class UniqueEmailTest(BoilerTestCase):
+class UniqueEmailTest(BaseTestCase):
 
     def setUp(self):
         super().setUp()

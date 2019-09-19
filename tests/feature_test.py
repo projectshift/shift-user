@@ -1,6 +1,6 @@
 from unittest import mock
 from nose.plugins.attrib import attr
-from tests.base_testcase import BoilerTestCase
+from tests.base_testcase import BaseTestCase
 
 from boiler import bootstrap
 from boiler.config import DefaultConfig
@@ -9,7 +9,7 @@ from shiftuser.services import user_service
 
 
 @attr('feature', 'user')
-class UserFeatureTests(BoilerTestCase):
+class UserFeatureTests(BaseTestCase):
 
     # ------------------------------------------------------------------------
     # General

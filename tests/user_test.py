@@ -1,6 +1,6 @@
 from unittest import mock
 from nose.plugins.attrib import attr
-from tests.base_testcase import BoilerTestCase
+from tests.base_testcase import BaseTestCase
 
 import jwt
 from datetime import datetime, timedelta
@@ -12,7 +12,7 @@ from shiftuser.services import role_service
 
 
 @attr('user', 'model')
-class UserTests(BoilerTestCase):
+class UserTests(BaseTestCase):
 
     def setUp(self):
         super().setUp()

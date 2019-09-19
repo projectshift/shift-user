@@ -1,0 +1,33 @@
+from boiler import bootstrap
+from boiler.config import TestingConfig
+
+"""
+Create app for testing
+This is not a real application, we only use it to run tests against.
+
+Templates resolution
+Default template location for flask apps is wherever the application module is 
+located. This is alright for regular applications because we bootstrap them from 
+their root, but for testing application our template root becomes 
+shiftuser/tests/templates. There is however a way to set up application root path 
+on the flask app.
+
+In order for it to be able to find default boiler templates, we will need to set 
+templates directory, otherwise it will automagically resolve to this file's 
+parent dir.
+
+On how flask resolves template path see 'template_folder' here:
+@see http://flask.pocoo.org/docs/0.12/api/
+"""
+
+# create app
+app = bootstrap.create_app(
+    __name__,
+    config=TestingConfig(),
+    flask_params=dict(template_folder='../../templates')
+)
+
+bootstrap.add_orm(app)
+bootstrap.add_mail(app)
+bootstrap.add_routing(app)
+

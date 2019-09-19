@@ -28,7 +28,7 @@ when do we decide which one to use?
 """
 
 
-class BoilerSessionInterface(SecureCookieSessionInterface):
+class SessionInterface(SecureCookieSessionInterface):
     """
     Session Interface
 
@@ -53,7 +53,7 @@ class BoilerSessionInterface(SecureCookieSessionInterface):
             return
 
         # send cookie
-        return super(BoilerSessionInterface, self).save_session(
+        return super(SessionInterface, self).save_session(
             *args,
             **kwargs
         )
