@@ -7,7 +7,17 @@ Provides support RBAC and access control with [Principal](http://pythonhosted.or
 the process of being migrated to a separate project (this one). Use with caution.
 
 
-## enabling users feature
+# Installation
+
+### get the package
+
+You can install the package wrom PyPI:
+
+```
+pip install shiftuser
+```
+
+### enabling users feature
 To enable the feature run the code below at bootstrap time passing it an instance
 of you flask application
 
@@ -18,10 +28,13 @@ users_feature(app)
 
 There is a lot to users feature - it provides facilities to create and manage user profiles, authenticate with username, passwords and oauth, manage user profiles, reset passwords, confirm and activate accounts and a handy set of console commands for your cli to perform admin tasks.
 
-## users cli
+### users cli
 To connect user commands to your project CLI edit cli file in your project root and mount the commands:
 
 ```python
-from shiftuser.cli import user_cli
+from shiftuser.cli import cli as user_cli
 cli.add_command(user_cli, name='user')
 ```
+
+
+# Configuration

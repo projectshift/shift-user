@@ -412,11 +412,11 @@ class UserService(AbstractService):
 
         # render message
         if self.require_confirmation:
-            html = render_template('user/mail/account-confirm.html', **data)
-            txt = render_template('user/mail/account-confirm.txt', **data)
+            html = render_template('mail/account-confirm.html', **data)
+            txt = render_template('mail/account-confirm.txt', **data)
         else:
-            html = render_template('user/mail/welcome.html', **data)
-            txt = render_template('user/mail/welcome.txt', **data)
+            html = render_template('mail/welcome.html', **data)
+            txt = render_template('mail/welcome.txt', **data)
 
         # and send
         mail.send(Message(
@@ -508,8 +508,8 @@ class UserService(AbstractService):
             link=user.email_link
         )
         data = dict(link=link)
-        html = render_template('user/mail/email-change-confirm.html', **data)
-        txt = render_template('user/mail/email-change-confirm.txt', **data)
+        html = render_template('mail/email-change-confirm.html', **data)
+        txt = render_template('mail/email-change-confirm.txt', **data)
 
         mail.send(Message(
             subject=subject,
@@ -574,8 +574,8 @@ class UserService(AbstractService):
             link=user.password_link
         )
         data = dict(link=link)
-        html = render_template('user/mail/password-change.html', **data)
-        txt = render_template('user/mail/password-change.txt', **data)
+        html = render_template('mail/password-change.html', **data)
+        txt = render_template('mail/password-change.txt', **data)
 
         mail.send(Message(
             subject=subject,

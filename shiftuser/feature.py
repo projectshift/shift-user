@@ -1,4 +1,6 @@
-from flask import session, g, current_app, abort
+import os
+from flask import session, current_app, abort
+from jinja2 import ChoiceLoader, FileSystemLoader
 from flask_login import current_user
 from flask_principal import identity_loaded, UserNeed, RoleNeed
 from flask_principal import Identity, AnonymousIdentity
@@ -23,6 +25,12 @@ def users_feature(app):
     # check we have jwt secret configures
     if not app.config.get('USER_JWT_SECRET', None):
         raise x.JwtSecretMissing('Please set USER_JWT_SECRET in config')
+
+    # set path to default user templates
+    if not isinstance(app.jinja_loader, ChoiceLoader):
+        app.jinja_loader = ChoiceLoader([app.jinja_loader])
+    user_templates = os.path.realpath(os.path.dirname(__file__) + '/templates')
+    app.jinja_loader.loaders.append(FileSystemLoader([user_templates]))
 
     # use custom session interface
     app.session_interface = SessionInterface()

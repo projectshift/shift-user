@@ -8,6 +8,7 @@ from flask import session
 from shiftschema.result import Result
 
 from boiler.feature.mail import mail
+from shiftuser.feature import users_feature
 from shiftuser.services import user_service, role_service
 from shiftuser import events, exceptions as x
 from shiftuser.events import events as user_events
@@ -604,8 +605,13 @@ class UserServiceTests(BaseTestCase):
                 self.assertTrue(u.verify_password('0987654'))
                 spy.assert_called_with(u)
 
+    @attr('zzz')
     def test_send_password_message(self):
         """ Sending confirmation message to change password """
+
+        users_feature(self.app)
+
+
         with events.events.disconnect_receivers():
             user = self.create_user()
             user.generate_password_link()

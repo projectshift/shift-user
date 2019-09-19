@@ -99,7 +99,7 @@ class Profile(View):
 class ProfileHome(Profile):
     """ Displays user profile page """
     decorators = [guest_access]
-    template = 'user/profile/home.j2'
+    template = 'profile/home.j2'
     navigation_callback = Profile.init_navigation
 
     def dispatch_request(self, id=None):
@@ -122,7 +122,7 @@ class ProfileHome(Profile):
 
 class ProfileEmailChange(Profile):
     """ Email changer screen """
-    template = 'user/profile/email.j2'
+    template = 'profile/email.j2'
     form = ChangeEmailForm
     schema = UpdateSchema
     invalid_message = 'Form invalid'
@@ -178,7 +178,7 @@ class ProfileEmailChange(Profile):
 
 class ProfilePasswordChange(Profile):
     """ Password changer screen """
-    template = 'user/profile/password.j2'
+    template = 'profile/password.j2'
     form = ChangePasswordForm
     schema = UpdateSchema
     invalid_message = 'Form invalid'
@@ -213,7 +213,7 @@ class ProfilePasswordChange(Profile):
 
 class ProfileSocial(Profile):
     """ Social settings screen """
-    template = 'user/profile/social.j2'
+    template = 'profile/social.j2'
     navigation_callback = Profile.init_navigation
     disabled_message = 'Disabled social network'
     handle_endpoint = 'user.social.connect.{}'

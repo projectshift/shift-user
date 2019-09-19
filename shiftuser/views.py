@@ -63,7 +63,7 @@ class Login(View):
     lock_msg = 'Account locked until {}'
     unconfirmed_email_endpoint = 'user.confirm.email.unconfirmed'
     redirect = '/'
-    template = 'user/login.j2'
+    template = 'login.j2'
     params = {}
     flash = False
 
@@ -105,7 +105,7 @@ class Login(View):
 
 class SocialLogin(View):
     """ Base view for social authentication options """
-    template = 'user/login-social.j2'
+    template = 'login-social.j2'
     redirect = '/'
 
     def dispatch_request(self):
@@ -125,7 +125,7 @@ class Register(View):
     form = forms.RegisterForm
     schema = RegisterSchema
     data_fields = ['email', 'password']
-    template = 'user/register/register.j2'
+    template = 'register/register.j2'
     invalid_message = 'Form invalid'
     redirect_success_endpoint = 'user.register.success'
     redirect_fail_endpoint = 'user.register.fail'
@@ -180,16 +180,17 @@ class Register(View):
 
 class RegisterSuccess(Template):
     """ Registration successful screen """
-    template = 'user/register/success.j2'
+    template = 'register/success.j2'
 
 
 class RegisterFail(Template):
     """ Registration failed screen """
-    template = 'user/register/fail.j2'
+    template = 'register/fail.j2'
 
 # -----------------------------------------------------------------------------
 # Confirm email
 # -----------------------------------------------------------------------------
+
 
 class ConfirmEmailUnconfirmed(Template):
     """
@@ -197,12 +198,13 @@ class ConfirmEmailUnconfirmed(Template):
     This gets used with subsequent attempts to do social login
     and may be re-used elsewhere
     """
-    template = 'user/confirm-email/unconfirmed.j2'
+    template = 'confirm-email/unconfirmed.j2'
+
 
 class ConfirmEmailRequest(View):
     """ Regenerate email link and resend confirmation """
     form = forms.ResendEmailConfirmationForm
-    template = 'user/confirm-email/request.j2'
+    template = 'confirm-email/request.j2'
     form_invalid_message = 'Please correct errors and try again.'
     user_not_found_message = 'Sorry, no such user found.'
     already_confirmed_endpoint = 'user.confirm.email.resend.already_confirmed'
@@ -261,17 +263,17 @@ class ConfirmEmailRequest(View):
 
 class ConfirmEmailResendOk(Template):
     """ Confirmation email resent """
-    template = 'user/confirm-email/resent-ok.j2'
+    template = 'confirm-email/resent-ok.j2'
 
 
 class ConfirmEmailResendAlreadyConfirmed(Template):
     """ Already confirmed """
-    template = 'user/confirm-email/already-confirmed.j2'
+    template = 'confirm-email/already-confirmed.j2'
 
 
 class ConfirmEmailExpired(View):
     """ Displays email link expired message with an option to regenerate """
-    template = 'user/confirm-email/expired.j2'
+    template = 'confirm-email/expired.j2'
     resend_endpoint = 'user.confirm.email.request'
 
     def dispatch_request(self, id=None):
@@ -309,7 +311,7 @@ class RecoverPasswordRequest(View):
     form = forms.RecoverPasswordRequestForm
     invalid_message = 'Please correct errors'
     not_found_message = 'User with such email is not registered'
-    template = 'user/recover-password/request/request.j2'
+    template = 'recover-password/request/request.j2'
     ok_redirect = 'user.recover.password.sent'
     ok_redirect_params = dict()
     confirm_endpoint = 'user.recover.password.request'
@@ -349,12 +351,12 @@ class RecoverPasswordRequest(View):
 
 class RecoverPasswordRequestOk(Template):
     """ Password recovery message sent """
-    template = 'user/recover-password/request/ok.j2'
+    template = 'recover-password/request/ok.j2'
 
 
 class RecoverPasswordExpired(Template):
     """ Password recovery link expired """
-    template = 'user/recover-password/change/expired.j2'
+    template = 'recover-password/change/expired.j2'
 
 
 class RecoverPassword(View):
@@ -362,7 +364,7 @@ class RecoverPassword(View):
     schema = UpdateSchema
     form = forms.RecoverPasswordForm
     invalid_message = 'Please correct errors'
-    template = 'user/recover-password/change/change.j2'
+    template = 'recover-password/change/change.j2'
     ok_redirect = 'user.login'
     ok_redirect_params = dict()
     ok_message = 'Password changed. Login with  new password.'
