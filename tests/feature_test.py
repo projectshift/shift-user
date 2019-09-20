@@ -1,4 +1,3 @@
-from unittest import mock
 from nose.plugins.attrib import attr
 from tests.base_testcase import BaseTestCase
 
@@ -6,6 +5,7 @@ from boiler import bootstrap
 from boiler.config import DefaultConfig
 from shiftuser import exceptions as x
 from shiftuser.services import user_service
+from shiftuser.feature import users_feature
 
 
 @attr('feature', 'user')
@@ -21,7 +21,7 @@ class UserFeatureTests(BaseTestCase):
         config.USER_JWT_SECRET = None
         app = bootstrap.create_app('demo', config=config)
         with self.assertRaises(x.JwtSecretMissing):
-            bootstrap.add_users(app)
+            users_feature(app)
 
     def test_user_service_receives_config_options(self):
         """ Initializing user service with config options """
@@ -32,7 +32,7 @@ class UserFeatureTests(BaseTestCase):
             USER_SEND_WELCOME_MESSAGE = False
             USER_EMAIL_SUBJECTS = {}
         app = bootstrap.create_app('demo', config=CustomConfig())
-        bootstrap.add_users(app)
+        users_feature(app)
 
         self.assertEquals(
             CustomConfig.USER_PUBLIC_PROFILES,

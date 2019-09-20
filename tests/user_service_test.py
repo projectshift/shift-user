@@ -7,6 +7,7 @@ from datetime import datetime, timedelta
 from flask import session
 from shiftschema.result import Result
 
+from shiftuser.feature import users_feature
 from boiler.feature.mail import mail
 from shiftuser.feature import users_feature
 from shiftuser.services import user_service, role_service
@@ -34,6 +35,7 @@ class UserServiceTests(BaseTestCase):
     def setUp(self):
         super().setUp()
         self.create_db()
+        users_feature(self.app)
 
     def create_user(self, confirm_email=True):
         """ A shortcut to quickly create and return a user """
@@ -605,13 +607,8 @@ class UserServiceTests(BaseTestCase):
                 self.assertTrue(u.verify_password('0987654'))
                 spy.assert_called_with(u)
 
-    @attr('zzz')
     def test_send_password_message(self):
         """ Sending confirmation message to change password """
-
-        users_feature(self.app)
-
-
         with events.events.disconnect_receivers():
             user = self.create_user()
             user.generate_password_link()
@@ -718,7 +715,7 @@ class UserServiceTests(BaseTestCase):
 
         cfg = CustomConfig()
         app = bootstrap.create_app('demo', config=cfg)
-        bootstrap.add_users(app)
+        users_feature(app)
 
         self.assertEquals(
             cfg.get('USER_JWT_SECRET'),
@@ -912,13 +909,13 @@ class UserServiceTests(BaseTestCase):
 
         cfg = CustomConfig()
         app = bootstrap.create_app('demo', config=cfg)
-        bootstrap.add_users(app)
+        users_feature(app)
         with self.assertRaises(x.ConfigurationException):
             user_service.get_token(123)
 
     def test_can_use_custom_token_implementation(self):
         """ Can register and use custom token implementation"""
-        token = 'tests.user_tests.user_service_test.custom_token_implementation'
+        token = 'tests.user_service_test.custom_token_implementation'
 
         class CustomConfig(DefaultConfig):
             USER_JWT_SECRET = 'SuperSecret'
@@ -927,7 +924,7 @@ class UserServiceTests(BaseTestCase):
 
         cfg = CustomConfig()
         app = bootstrap.create_app('demo', config=cfg)
-        bootstrap.add_users(app)
+        users_feature(app)
         user_id = 123
         token = user_service.get_token(user_id)
         expected = custom_token_implementation(user_id)
@@ -941,13 +938,13 @@ class UserServiceTests(BaseTestCase):
 
         cfg = CustomConfig()
         app = bootstrap.create_app('demo', config=cfg)
-        bootstrap.add_users(app)
+        users_feature(app)
         with self.assertRaises(x.ConfigurationException):
             user_service.get_user_by_token(123)
 
     def test_can_use_custom_token_loader(self):
         """ Can register and use custom token user loader"""
-        loader = 'tests.user_tests.user_service_test.custom_token_loader'
+        loader = 'tests.user_service_test.custom_token_loader'
 
         class CustomConfig(DefaultConfig):
             USER_JWT_SECRET='SuperSecret'
@@ -956,7 +953,7 @@ class UserServiceTests(BaseTestCase):
 
         cfg = CustomConfig()
         app = bootstrap.create_app('demo', config=cfg)
-        bootstrap.add_users(app)
+        users_feature(app)
         loaded = user_service.get_user_by_token(123)
         expected = custom_token_loader(123)
         self.assertEquals(expected, loaded)

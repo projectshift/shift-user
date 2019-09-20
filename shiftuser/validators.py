@@ -38,7 +38,7 @@ class UniqueRoleHandle(AbstractValidator):
 
     def validate(self, value, model=None, context=None):
         """ Perform validation """
-        from shiftuser import role_service
+        from shiftuser.services import role_service
 
         self_id = None
         if model:

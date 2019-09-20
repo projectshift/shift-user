@@ -10,6 +10,7 @@ This is not a real application, we only use it to run tests against.
 
 class Config(TestingConfig):
     USER_JWT_SECRET = 'typically will come from environment'
+    SECRET_KEY = 'supersecret'
 
 
 # create app
