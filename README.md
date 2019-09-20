@@ -44,5 +44,24 @@ If you are using Alembic migrations, make sure to import user models in `migrati
 from shiftuser import models
 ```
 
+### routes and views
+Shiftuser provides extendible default implementation for a lot of register, login, OAuth and profile functionality. You can see everything in the [`urls.py`](https://github.com/projectshift/shift-user/blob/master/shiftuser/urls.py) file. You are free to selectively enable what you will be using, or simply import everything that is provided: 
+
+```
+from shiftuser.urls import user_urls
+urls = dict()
+urls.update(user_urls)
+```
+
+You can use base implementation and re-configure it or even do your own implementation:
+
+```
+from shiftuser.views import Login
+
+class MyCustomLogin(Login):
+    invalid_message = 'This is not a correct set of credentials'
+    template = 'custom-login.j2'
+```
+
 
 # Configuration
