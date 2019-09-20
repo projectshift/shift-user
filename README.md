@@ -1,6 +1,6 @@
 # shift-user
 A [shiftboiler](https://github.com/projectshift/shift-boiler) project skeleton extension providing user registration and [authentication](https://flask-login.readthedocs.io/en/latest/) including [OAuth](https://pythonhosted.org/Flask-OAuth/) support for facebook, google vk, instagram and linkedin.
-Provides support RBAC and access control with [Principal](http://pythonhosted.org/Flask-Principal/)
+Provides support for RBAC and access control with [Principal](http://pythonhosted.org/Flask-Principal/)
 
 
 **Important note:** although the codebase is pretty mature it is currently in
