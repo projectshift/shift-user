@@ -73,7 +73,7 @@ class MyCustomLogin(Login):
 
 Shiftuser provides a base Config mixin that you can use with your own application configs. Extending from it will provide a set of sensible defaults that you can override in your concrete config implementations:
 
-```
+```python
 from shiftuser.config import UserConfig
 
 class MyConfig(UserConfig):
@@ -103,7 +103,7 @@ Here is the full list of configuration options:
 
 Configuration contains a `USER_EMAIL_SUBJECTS` dict that you can modify to override to set what your transactional email subjects will be:
 
-```
+```python
 {
   'welcome': 'Welcome to our site!',
   'welcome_confirm': 'Welcome,  please activate your account!',
@@ -118,7 +118,7 @@ Shiftuser out of the box supports OAuth with several popular providers. For each
 
 The config contains a dict with all the supported provides where you can put your keys:
 
-```
+```python
 {
   'facebook': {
     'id': 'app-id',
