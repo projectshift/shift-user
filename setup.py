@@ -57,7 +57,7 @@ setup(**dict(
     name='shifuser',
     version=package_version,
     url=repo,
-    download_url=repo + '/archive/v' + package_version + '.tar.gz',
+    download_url=repo + '/archive/' + package_version + '.tar.gz',
     description=description,
     long_description=long_description,
     long_description_content_type='text/markdown',  # This is important!
