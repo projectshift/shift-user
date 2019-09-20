@@ -1,13 +1,21 @@
 # shift-user
-Extensible user registration and [authentication](https://flask-login.readthedocs.io/en/latest/) including [OAuth](https://pythonhosted.org/Flask-OAuth/) support for facebook, google and vk, instagram and linkedin.
+A [shiftboiler](https://github.com/projectshift/shift-boiler) project skeleton extension providing user registration and [authentication](https://flask-login.readthedocs.io/en/latest/) including [OAuth](https://pythonhosted.org/Flask-OAuth/) support for facebook, google vk, instagram and linkedin.
 Provides support RBAC and access control with [Principal](http://pythonhosted.org/Flask-Principal/)
 
 
 **Important note:** although the codebase is pretty mature it is currently in
 the process of being migrated to a separate project (this one). Use with caution.
 
+## Requirements
 
-# Installation
+You will need to have  shiftboiler installed and an initialized project skeleton with following feature enabled:
+
+  * ORM
+  * Routing
+  * Mail
+
+
+## Installation
 
 ### get the package
 
@@ -64,4 +72,80 @@ class MyCustomLogin(Login):
 ```
 
 
-# Configuration
+## Configuration
+
+Shiftuser provides a base Config mixin that you can use with your own application configs. Extending from it will provide a set of sensible defaults that you can override in your concrete config implementations:
+
+```
+from shiftuser.config import UserConfig
+
+class MyConfig(UserConfig):
+    USER_PUBLIC_PROFILES = False
+    USER_ACCOUNTS_REQUIRE_CONFIRMATION = True
+    USER_SEND_WELCOME_MESSAGE = True
+```
+
+Here is the full list of configuration options:
+
+| **Setting** | **Default** | **Description** |
+|---|---|---|
+| `PASSLIB_ALGO` | `bcrypt` | Passwords encryption algorithm supported by [Passlib](https://passlib.readthedocs.io/en/stable/) |
+| `PASSLIB_SCHEMES` | `['bcrypt', 'md5_crypt']` | A list of supported password encryption algorithms |
+| `USER_JWT_SECRET` | `None` | This typically will come from an environment variable called `APP_USER_JWT_SECRET` |
+| `USER_JWT_ALGO` | `HS256` | JWT encryption algorithm |
+| `USER_JWT_LIFETIME_SECONDS` | `86400` | JWT lifetime in seconds |
+| `USER_JWT_IMPLEMENTATION` | `None` | Importable string module name to replace JWT default token implementation |
+| `USER_JWT_LOADER_IMPLEMENTATION` | `None` | Importable string module name to replace default JWT token loader|
+| `USER_PUBLIC_PROFILES` | `False` | Wether to allow user profile pages to be publicly accessible |
+| `USER_ACCOUNTS_REQUIRE_CONFIRMATION` | `True` | Whether new users have to confirm their email addresses |
+| `USER_SEND_WELCOME_MESSAGE` | `True` | Whether to send welcome message to new users |
+| `USER_BASE_EMAIL_CONFIRM_URL` | `None` | Allows to override base URL for email confirmation links. This is helpful when the app/API and the frontend are on different domains |
+| `USER_BASE_PASSWORD_CHANGE_URL` | `None` | Allows to override base URL for password reset links. This is helpful when the app/API and the frontend are on different domains |
+
+### User email subjects
+
+Configuration contains a `USER_EMAIL_SUBJECTS` dict that you can modify to override to set what your transactional email subjects will be:
+
+```
+{
+  'welcome': 'Welcome to our site!',
+  'welcome_confirm': 'Welcome,  please activate your account!',
+  'email_change': 'Please confirm your new email.',
+  'password_change': 'Change your password here.',
+}
+```
+
+### OAuth application keys
+
+Shiftuser out of the box supports OAuth with several popular providers. For each provider you would like to use, you must register an OAuth app and get application ID and application secret.
+
+The config contains a dict with all the supported provides where you can put your keys:
+
+```
+{
+  'facebook': {
+    'id': 'app-id',
+    'secret': 'app-seceret',
+    'scope': 'email',
+  },
+  'vkontakte': {
+    'id': 'app-id',
+    'secret': 'service-access-key',
+    'scope': 'email',
+    'offline': True
+  },
+  'google': {
+    'id': 'app-id',
+    'secret': 'app-secret',
+    'scope': 'email',
+    'offline': True
+  },
+  'instagram': {
+    'id': 'app-id',
+    'secret': 'app-secret',
+    'scope': 'basic'
+  },
+}
+```
+
+
