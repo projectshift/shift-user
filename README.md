@@ -3,9 +3,6 @@ A [shiftboiler](https://github.com/projectshift/shift-boiler) project skeleton e
 Provides support for RBAC and access control with [Principal](http://pythonhosted.org/Flask-Principal/)
 
 
-**Important note:** although the codebase is pretty mature it is currently in
-the process of being migrated to a separate project (this one). Use with caution.
-
 ## Requirements
 
 You will need to have  shiftboiler installed and an initialized project skeleton with following feature enabled:
