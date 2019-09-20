@@ -32,8 +32,16 @@ There is a lot to users feature - it provides facilities to create and manage us
 To connect user commands to your project CLI edit cli file in your project root and mount the commands:
 
 ```python
-from shiftuser.cli import cli as user_cli
-cli.add_command(user_cli, name='user')
+from shiftuser.cli import users_cli
+cli.add_command(users_cli, name='user')
+```
+
+### migrations
+If you are using Alembic migrations, make sure to import user models in `migrations/env.py`:
+
+```python
+# using boiler users?
+from shiftuser import models
 ```
 
 
