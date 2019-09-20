@@ -17,23 +17,23 @@ You can install the package wrom PyPI:
 pip install shiftuser
 ```
 
-### enabling users feature
+### enabling user feature
 To enable the feature run the code below at bootstrap time passing it an instance
 of you flask application
 
 ```python
-from shiftuser.feature import users_feature
-users_feature(app)
+from shiftuser.feature import user_feature
+user_feature(app)
 ```
 
-There is a lot to users feature - it provides facilities to create and manage user profiles, authenticate with username, passwords and oauth, manage user profiles, reset passwords, confirm and activate accounts and a handy set of console commands for your cli to perform admin tasks.
+There is a lot to user feature - it provides facilities to create and manage user profiles, authenticate with username, passwords and oauth, manage user profiles, reset passwords, confirm and activate accounts and a handy set of console commands for your cli to perform admin tasks.
 
-### users cli
+### user cli
 To connect user commands to your project CLI edit cli file in your project root and mount the commands:
 
 ```python
-from shiftuser.cli import users_cli
-cli.add_command(users_cli, name='user')
+from shiftuser.cli import user_cli
+cli.add_command(user_cli, name='user')
 ```
 
 ### migrations

@@ -7,9 +7,9 @@ from datetime import datetime, timedelta
 from flask import session
 from shiftschema.result import Result
 
-from shiftuser.feature import users_feature
+from shiftuser.config import UserConfig
 from boiler.feature.mail import mail
-from shiftuser.feature import users_feature
+from shiftuser.feature import user_feature
 from shiftuser.services import user_service, role_service
 from shiftuser import events, exceptions as x
 from shiftuser.events import events as user_events
@@ -35,7 +35,7 @@ class UserServiceTests(BaseTestCase):
     def setUp(self):
         super().setUp()
         self.create_db()
-        users_feature(self.app)
+        user_feature(self.app)
 
     def create_user(self, confirm_email=True):
         """ A shortcut to quickly create and return a user """
@@ -706,7 +706,7 @@ class UserServiceTests(BaseTestCase):
 
     def test_user_service_receives_jwt_options(self):
         """ Initializing user service with config options """
-        class CustomConfig(DefaultConfig):
+        class CustomConfig(DefaultConfig, UserConfig):
             USER_JWT_SECRET='SuperSecret'
             USER_JWT_ALGO='FAKE526'
             USER_JWT_LIFETIME_SECONDS=-1
@@ -715,7 +715,7 @@ class UserServiceTests(BaseTestCase):
 
         cfg = CustomConfig()
         app = bootstrap.create_app('demo', config=cfg)
-        users_feature(app)
+        user_feature(app)
 
         self.assertEquals(
             cfg.get('USER_JWT_SECRET'),
@@ -903,13 +903,13 @@ class UserServiceTests(BaseTestCase):
 
     def test_raise_when_failing_to_import_custom_token_implementation(self):
         """ Raising exception if custom token implementation fails to import"""
-        class CustomConfig(DefaultConfig):
+        class CustomConfig(DefaultConfig, UserConfig):
             USER_JWT_SECRET='SuperSecret'
             USER_JWT_IMPLEMENTATION='nonexistent.nonexistent'
 
         cfg = CustomConfig()
         app = bootstrap.create_app('demo', config=cfg)
-        users_feature(app)
+        user_feature(app)
         with self.assertRaises(x.ConfigurationException):
             user_service.get_token(123)
 
@@ -917,14 +917,14 @@ class UserServiceTests(BaseTestCase):
         """ Can register and use custom token implementation"""
         token = 'tests.user_service_test.custom_token_implementation'
 
-        class CustomConfig(DefaultConfig):
+        class CustomConfig(DefaultConfig, UserConfig):
             USER_JWT_SECRET = 'SuperSecret'
             USER_JWT_LIFETIME_SECONDS=10
             USER_JWT_IMPLEMENTATION=token
 
         cfg = CustomConfig()
         app = bootstrap.create_app('demo', config=cfg)
-        users_feature(app)
+        user_feature(app)
         user_id = 123
         token = user_service.get_token(user_id)
         expected = custom_token_implementation(user_id)
@@ -932,13 +932,13 @@ class UserServiceTests(BaseTestCase):
 
     def test_raise_when_failing_to_import_custom_token_loader(self):
         """ Raising exception if custom token loader fails to import"""
-        class CustomConfig(DefaultConfig):
+        class CustomConfig(DefaultConfig, UserConfig):
             USER_JWT_SECRET='SuperSecret'
             USER_JWT_LOADER_IMPLEMENTATION='nonexistent.nonexistent'
 
         cfg = CustomConfig()
         app = bootstrap.create_app('demo', config=cfg)
-        users_feature(app)
+        user_feature(app)
         with self.assertRaises(x.ConfigurationException):
             user_service.get_user_by_token(123)
 
@@ -946,14 +946,14 @@ class UserServiceTests(BaseTestCase):
         """ Can register and use custom token user loader"""
         loader = 'tests.user_service_test.custom_token_loader'
 
-        class CustomConfig(DefaultConfig):
+        class CustomConfig(DefaultConfig, UserConfig):
             USER_JWT_SECRET='SuperSecret'
             USER_JWT_IMPLEMENTATION=None
             USER_JWT_LOADER_IMPLEMENTATION=loader
 
         cfg = CustomConfig()
         app = bootstrap.create_app('demo', config=cfg)
-        users_feature(app)
+        user_feature(app)
         loaded = user_service.get_user_by_token(123)
         expected = custom_token_loader(123)
         self.assertEquals(expected, loaded)

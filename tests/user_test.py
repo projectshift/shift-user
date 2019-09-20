@@ -230,7 +230,6 @@ class UserTests(BaseTestCase):
         self.assertIsNone(user.email_link)
         self.assertIsNone(user.email_new)
 
-
     def test_new_users_cant_cancel_email_change(self):
         """ New users can not request email change cancellation """
         user = User(email='first@outlook.com')

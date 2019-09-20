@@ -13,11 +13,9 @@ from shiftuser.services import user_service
 from shiftuser.util.oauth_providers import OauthProviders
 
 
-# TODO: set up path to default user templates
-
-def users_feature(app):
+def user_feature(app):
     """
-    Add users feature
+    Add user feature
     Allows to register users and assign groups, instantiates flask login,
     flask principal and oauth integration
     """

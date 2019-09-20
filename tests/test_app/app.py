@@ -1,6 +1,6 @@
 from boiler import bootstrap
 from boiler.config import TestingConfig
-from shiftuser.feature import users_feature
+from shiftuser.config import UserConfig
 
 """
 Create app for testing
@@ -8,7 +8,7 @@ This is not a real application, we only use it to run tests against.
 """
 
 
-class Config(TestingConfig):
+class Config(TestingConfig, UserConfig):
     USER_JWT_SECRET = 'typically will come from environment'
     SECRET_KEY = 'supersecret'
 

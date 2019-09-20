@@ -17,7 +17,7 @@ class OauthProviders:
 
     def init_app(self, app):
         """ Config initializer  """
-        self.config = app.config['OAUTH']
+        self.config = app.config['USER_OAUTH']
 
     def get_providers(self):
         """
