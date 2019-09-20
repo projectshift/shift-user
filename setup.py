@@ -54,7 +54,7 @@ setup(**dict(
     author_email='dmitrybelyakov@gmail.com',
 
     # project meta
-    name='shifuser',
+    name='shiftuser',
     version=package_version,
     url=repo,
     download_url=repo + '/archive/' + package_version + '.tar.gz',
@@ -107,7 +107,14 @@ setup(**dict(
     # # project dependencies
     install_requires=[
         'shiftboiler>=0.8.0,<0.9.0',
-        'click>=7.0.0,<8.0.0'
+        'click>=7.0.0,<8.0.0',
+        'bcrypt>=3.1.6,<4.0.0',
+        'passlib==1.7.1',
+        'PyJWT>=1.7.1,<2.0.0',
+        'Flask-Login==0.4.1',
+        'requests-oauthlib==1.1.0',
+        'Flask-OAuthlib==0.9.5',
+        'Flask-Principal==0.4.0'
     ],
 
 
