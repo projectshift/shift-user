@@ -23,13 +23,13 @@ from setuptools import find_packages
 # ----------------------------------------------------------------------------
 
 # project version
-from .shiftuser.version import version as package_version
+from shiftuser.version import version as package_version
 
 # development status
 # dev_status = '1 - Planning'
 # dev_status = '2 - Pre-Alpha'
-dev_status = '3 - Alpha'
-# dev_status = '4 - Beta'
+# dev_status = '3 - Alpha'
+dev_status = '4 - Beta'
 # dev_status = '5 - Production/Stable'
 # dev_status = '6 - Mature'
 # dev_status = '7 - Inactive'
@@ -105,10 +105,10 @@ setup(**dict(
     include_package_data=True,
 
     # # project dependencies
-    # install_requires=[
-    #     'click>=7.0.0,<8.0.0',
-    #     'shiftschema>=0.2.5,<0.3.0',
-    # ],
+    install_requires=[
+        'shiftboiler>=0.8.0,<0.9.0',
+        'click>=7.0.0,<8.0.0'
+    ],
 
 
     # project license
