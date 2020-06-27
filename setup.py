@@ -107,7 +107,7 @@ setup(**dict(
     # # project dependencies
     install_requires=[
         'shiftboiler>=0.9.0,<0.10.0',
-        'click>=7.1.12,<8.0.0',
+        'click>=7.1.2,<8.0.0',
         'bcrypt>=3.1.7,<4.0.0',
         'passlib>=1.7.2,<1.8.0',
         'PyJWT>=1.7.1,<2.0.0',
