@@ -5,6 +5,7 @@ from tests.base_testcase import BaseTestCase
 import jwt
 from datetime import datetime, timedelta
 from flask import session
+from flask_login import current_user
 from shiftschema.result import Result
 
 from shiftuser.config import UserConfig
@@ -122,7 +123,7 @@ class UserServiceTests(BaseTestCase):
             with self.app.test_request_context():
                 res = user_service.login(user.email, '123456')
                 self.assertTrue(res)
-                self.assertTrue('user_id' in session)
+                self.assertTrue(current_user.is_authenticated)
 
     def test_force_login(self):
         """ Can force login a user """
@@ -131,7 +132,7 @@ class UserServiceTests(BaseTestCase):
             with self.app.test_request_context():
                 res = user_service.force_login(user)
                 self.assertTrue(res)
-                self.assertTrue('user_id' in session)
+                self.assertTrue(current_user.is_authenticated)
 
     def test_force_login_emits_event(self):
         """ Force login emits event """
@@ -191,10 +192,10 @@ class UserServiceTests(BaseTestCase):
             with self.app.test_request_context():
                 result = user_service.login(user.email, '123456')
                 self.assertTrue(result)  # login first
-                self.assertTrue('user_id' in session)
+                self.assertTrue(current_user.is_authenticated)
                 result = user_service.logout()  # now logout
                 self.assertTrue(result)
-                self.assertFalse('user_id' in session)
+                self.assertFalse(current_user.is_authenticated)
 
     def test_logout_emits_event(self):
         """ Logout emits event """
@@ -492,7 +493,7 @@ class UserServiceTests(BaseTestCase):
             with self.app.test_request_context():
                 u = self.create_user()
                 user_service.force_login(u)
-                self.assertTrue('user_id' in session)
+                self.assertTrue(current_user.is_authenticated)
 
                 res = user_service.change_email(
                     u,
@@ -504,7 +505,7 @@ class UserServiceTests(BaseTestCase):
                 self.assertIsNotNone(u.email_link)
 
                 # do not log out
-                self.assertTrue('user_id' in session)
+                self.assertTrue(current_user.is_authenticated)
 
     def test_change_email_emits_event(self):
         """ Email change request emits event"""
@@ -527,7 +528,7 @@ class UserServiceTests(BaseTestCase):
                 with self.app.test_request_context():
                     u = self.create_user()
                     user_service.force_login(u)
-                    self.assertTrue('user_id' in session)
+                    self.assertTrue(current_user.is_authenticated)
                     res = user_service.change_email(u, 'new@email.com')
                     self.assertIsInstance(res, User)
                     self.assertEqual('new@email.com', u.email_new)
@@ -588,9 +589,9 @@ class UserServiceTests(BaseTestCase):
         with events.events.disconnect_receivers():
             with self.app.test_request_context():
                 user_service.force_login(u)
-                self.assertTrue('user_id' in session)
+                self.assertTrue(current_user.is_authenticated)
                 user_service.change_password(u, '0987654')
-                self.assertFalse('user_id' in session)
+                self.assertFalse(current_user.is_authenticated)
                 self.assertTrue(u.verify_password('0987654'))
 
     def test_password_change_emits_event(self):
@@ -601,9 +602,9 @@ class UserServiceTests(BaseTestCase):
             events.password_changed_event.connect(spy, weak=False)
             with self.app.test_request_context():
                 user_service.force_login(u)
-                self.assertTrue('user_id' in session)
+                self.assertTrue(current_user.is_authenticated)
                 user_service.change_password(u, '0987654')
-                self.assertFalse('user_id' in session)
+                self.assertFalse(current_user.is_authenticated)
                 self.assertTrue(u.verify_password('0987654'))
                 spy.assert_called_with(u)
 
