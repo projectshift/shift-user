@@ -56,6 +56,16 @@ class Role(db.Model):
         u = '<Role id="{}" handle="{}" title="{}">'
         return u.format(self.id, self.handle, self.title)
 
+    def to_dict(self):
+        """ Returns a dictionary representation of role"""
+        role = dict(
+            id=self.id,
+            handle=self.handle,
+            title=self.title,
+            description=self.description
+        )
+        return role
+
     @hybrid_property
     def handle(self):
         return self._handle
@@ -159,6 +169,40 @@ class User(db.Model):
         """ Printable representation of user """
         u = '<User id="{}" email="{}">'
         return u.format(self.id, self.email_secure)
+
+    def to_dict(self, roles=False, serialize=False):
+        """ Returns a dictionary representation of user"""
+        user = dict(
+            id=self.id,
+            created=self.created,
+            failed_logins=self.failed_logins,
+            locked=self.is_locked(),
+            locked_until=self.locked_until,
+            email=self.email_secure,
+            email_confirmed=self.email_confirmed,
+            facebook_id=self.facebook_id,
+            google_id=self.google_id,
+            vkontakte_id=self.vkontakte_id,
+            instagram_id=self.instagram_id,
+            roles=[]
+        )
+
+        if serialize:
+            format = '%Y-%m-%d %H:%M:%S'
+            user['created'] = datetime.datetime.strftime(
+                user['created'],
+                format
+            )
+            if user['locked_until']:
+                user['locked_until'] = datetime.datetime.strftime(
+                    user['locked_until'],
+                    format
+            )
+
+        if roles:
+            user['roles'] = [role.to_dict() for role in self.roles]
+
+        return user
 
     def generate_hash(self, length=30):
         """ Generate random string of given length """

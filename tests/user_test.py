@@ -58,6 +58,41 @@ class UserTests(BaseTestCase):
         expected = url.format(md5(user.email.encode('utf-8')).hexdigest(), size)
         self.assertEqual(expected, user.gravatar(size))
 
+    def test_can_get_user_as_dict(self):
+        """ User object is convertible to dict"""
+        user = User(**self.data)
+        user.lock_account()
+        data = user.to_dict()
+        self.assertIn('id', data)
+        self.assertIsInstance(data['created'], datetime)
+        self.assertEqual(0, data['failed_logins'])
+        self.assertTrue(data['locked'])
+        self.assertIsInstance(data['locked_until'], datetime)
+        self.assertIn('email', data)
+        self.assertFalse(data['email_confirmed'])
+        self.assertIn('facebook_id', data)
+        self.assertIn('google_id', data)
+        self.assertIn('vkontakte_id', data)
+        self.assertIn('instagram_id', data)
+        self.assertIn('roles', data)
+        self.assertEqual(0, len(data['roles']))
+
+    def test_can_get_user_as_dict_serialized(self):
+        """ User object is convertible to dict"""
+        user = User(**self.data)
+        user.lock_account()
+        data = user.to_dict(serialize=True)
+        self.assertIsInstance(data['created'], str)
+        self.assertIsInstance(data['locked_until'], str)
+
+    def test_can_get_user_as_dict_with_roles(self):
+        """ Include roles when getting a dictionary representation of user"""
+        user = User(**self.data)
+        user.lock_account()
+        data = user.to_dict(roles=True)
+        self.assertEqual(1, len(data['roles']))
+        self.assertEqual('user', data['roles'][0]['handle'])
+
     # -------------------------------------------------------------------------
     # Login counter
     # -------------------------------------------------------------------------

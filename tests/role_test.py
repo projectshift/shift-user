@@ -31,6 +31,15 @@ class RoleTests(BaseTestCase):
         self.assertEqual(data['description'], role.description)
         self.assertIsNone(role.id)
 
+    def test_get_role_as_dict(self):
+        """ Get get a dictionary representation of role"""
+        role = Role(**self.data)
+        data = role.to_dict()
+        self.assertIn('id', data)
+        self.assertEqual(self.data['handle'].lower(), data['handle'])
+        self.assertEqual(self.data['title'], data['title'])
+        self.assertEqual(self.data['description'], data['description'])
+
     def test_get_printable_repr(self):
         """ Getting printable representation of role """
         role = Role(**self.data)
