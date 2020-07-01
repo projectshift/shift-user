@@ -715,7 +715,7 @@ class UserServiceTests(BaseTestCase):
             USER_JWT_LOADER_IMPLEMENTATION=None
 
         cfg = CustomConfig()
-        app = bootstrap.create_app('demo', config=cfg)
+        app = bootstrap.create_app(__name__, config=cfg)
         user_feature(app)
 
         self.assertEquals(
@@ -909,7 +909,7 @@ class UserServiceTests(BaseTestCase):
             USER_JWT_IMPLEMENTATION='nonexistent.nonexistent'
 
         cfg = CustomConfig()
-        app = bootstrap.create_app('demo', config=cfg)
+        app = bootstrap.create_app(__name__, config=cfg)
         user_feature(app)
         with self.assertRaises(x.ConfigurationException):
             user_service.get_token(123)
@@ -924,7 +924,7 @@ class UserServiceTests(BaseTestCase):
             USER_JWT_IMPLEMENTATION=token
 
         cfg = CustomConfig()
-        app = bootstrap.create_app('demo', config=cfg)
+        app = bootstrap.create_app(__name__, config=cfg)
         user_feature(app)
         user_id = 123
         token = user_service.get_token(user_id)
@@ -938,7 +938,7 @@ class UserServiceTests(BaseTestCase):
             USER_JWT_LOADER_IMPLEMENTATION='nonexistent.nonexistent'
 
         cfg = CustomConfig()
-        app = bootstrap.create_app('demo', config=cfg)
+        app = bootstrap.create_app(__name__, config=cfg)
         user_feature(app)
         with self.assertRaises(x.ConfigurationException):
             user_service.get_user_by_token(123)
@@ -953,7 +953,7 @@ class UserServiceTests(BaseTestCase):
             USER_JWT_LOADER_IMPLEMENTATION=loader
 
         cfg = CustomConfig()
-        app = bootstrap.create_app('demo', config=cfg)
+        app = bootstrap.create_app(__name__, config=cfg)
         user_feature(app)
         loaded = user_service.get_user_by_token(123)
         expected = custom_token_loader(123)

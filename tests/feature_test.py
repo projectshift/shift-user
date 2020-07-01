@@ -19,19 +19,19 @@ class UserFeatureTests(BaseTestCase):
         """ Fail to initialize user feature without JWT secret"""
         config = DefaultConfig()
         config.USER_JWT_SECRET = None
-        app = bootstrap.create_app('demo', config=config)
+        app = bootstrap.create_app(__name__, config=config)
         with self.assertRaises(x.JwtSecretMissing):
             user_feature(app)
 
     def test_user_service_receives_config_options(self):
         """ Initializing user service with config options """
         class CustomConfig(DefaultConfig, UserConfig):
-            USER_JWT_SECRET='123'
+            USER_JWT_SECRET = '123'
             USER_PUBLIC_PROFILES = False
             USER_ACCOUNTS_REQUIRE_CONFIRMATION = False
             USER_SEND_WELCOME_MESSAGE = False
             USER_EMAIL_SUBJECTS = {}
-        app = bootstrap.create_app('demo', config=CustomConfig())
+        app = bootstrap.create_app(__name__, config=CustomConfig())
         user_feature(app)
 
         self.assertEquals(
