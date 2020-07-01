@@ -1,21 +1,13 @@
 #!/usr/bin/env python3
 import click
-
-# -----------------------------------------------------------------------------
-# Group setup
-# -----------------------------------------------------------------------------
-
-
-@click.group(help='shiftuser development commands')
-def cli():
-    pass
+from shiftuser.cli import user_cli
 
 
 # -----------------------------------------------------------------------------
 # Commands
 # -----------------------------------------------------------------------------
 
-@cli.command(name='importable')
+@user_cli.command(name='importable')
 def importable():
     """ Make shiftuser module importable"""
     import site
@@ -32,7 +24,7 @@ def importable():
         file.write('{}\n'.format(import_from_here))
 
 
-@cli.command(name='test', context_settings=dict(ignore_unknown_options=True))
+@user_cli.command(name='test', context_settings=dict(ignore_unknown_options=True))
 @click.argument('nose_argsuments', nargs=-1, type=click.UNPROCESSED)
 def test(nose_argsuments):
     """ Run shiftuser tests """
@@ -42,13 +34,13 @@ def test(nose_argsuments):
     run(argv=params)
 
 
-@cli.command(name='build')
+@user_cli.command(name='build')
 def build():
     """ Build with setuptools"""
     pass
 
 
-@cli.command(name='publish')
+@user_cli.command(name='publish')
 def publish():
     """ Publish to PyPI with twine"""
     pass
@@ -58,4 +50,4 @@ def publish():
 # -----------------------------------------------------------------------------
 
 
-cli()
+user_cli()

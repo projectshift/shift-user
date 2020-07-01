@@ -2,7 +2,7 @@ import click
 from boiler.cli.colors import *
 from shiftuser.models import User, Role
 from shiftuser.services import user_service, role_service
-from boiler.cli import get_app
+from boiler.bootstrap import get_app
 
 
 def print_validation_errors(result):
