@@ -456,6 +456,7 @@ class UserService(AbstractService):
         db.session.add(user)
         db.session.commit()
         events.email_confirmed_event.send(user)
+        self.force_login(user)
         return user
 
     # -------------------------------------------------------------------------
