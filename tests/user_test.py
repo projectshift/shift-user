@@ -166,6 +166,11 @@ class UserTests(BaseTestCase):
         self.assertEqual('t****r@gmail.com', u3.email_secure)
         self.assertEqual('t*****-*****r@gmail.com', u4.email_secure)
 
+    def test_email_secure_return_none_if_theres_no_email_set(self):
+        """ Return None for email_secure if email not set """
+        user = User()
+        self.assertIsNone(user.email_secure)
+
     def test_new_users_have_unconfirmed_email(self):
         """ New users emails are unconfirmed by default """
         user = User()

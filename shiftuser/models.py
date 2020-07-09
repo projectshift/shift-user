@@ -300,7 +300,9 @@ class User(db.Model):
     def email_secure(self):
         """ Obfuscated email used for display """
         email = self._email
-        if not email: return ''
+        if not email:
+            return None
+        
         address, host = email.split('@')
         if len(address) <= 2: return ('*' * len(address)) + '@' + host
 
