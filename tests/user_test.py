@@ -4,6 +4,7 @@ from tests.base_testcase import BaseTestCase
 
 import jwt
 from datetime import datetime, timedelta
+from flask_principal import Need
 from boiler.config import DefaultConfig
 from boiler import bootstrap
 from shiftuser.models import User, Role
@@ -92,6 +93,19 @@ class UserTests(BaseTestCase):
         data = user.to_dict(roles=True)
         self.assertEqual(1, len(data['roles']))
         self.assertEqual('user', data['roles'][0]['handle'])
+
+    # -------------------------------------------------------------------------
+    # Principal provider
+    # -------------------------------------------------------------------------
+
+    def test_user_provides_default_principal_needs(self):
+        """ User provides default needs to principal identity"""
+        user = User()
+        user.id = 123
+        needs = user.provide_principal_needs()
+        self.assertEquals(2, len(needs))
+        for need in needs:
+            self.assertIsInstance(need, Need)
 
     # -------------------------------------------------------------------------
     # Login counter

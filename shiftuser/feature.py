@@ -2,8 +2,9 @@ import os
 from flask import session, current_app, abort
 from jinja2 import ChoiceLoader, FileSystemLoader
 from flask_login import current_user
-from flask_principal import identity_loaded, UserNeed, RoleNeed
-from flask_principal import Identity, AnonymousIdentity
+from flask_principal import identity_loaded
+from flask_principal import Identity
+from flask_principal import AnonymousIdentity
 import logging
 
 from shiftuser import exceptions as x
@@ -72,9 +73,9 @@ def user_feature(app):
         if not current_user.is_authenticated:
             return
 
-        identity.provides.add(UserNeed(current_user.id))
-        for role in current_user.roles:
-            identity.provides.add(RoleNeed(role.handle))
+        # add needs provided by the user
+        for need in current_user.provide_principal_needs():
+            identity.provides.add(need)
 
 
 def enable_request_loader():

@@ -1,9 +1,8 @@
 import datetime, jwt
 from hashlib import md5
 from sqlalchemy.ext.hybrid import hybrid_property
-from flask import current_app
+from flask_principal import UserNeed, RoleNeed
 from shiftuser import exceptions as x
-
 from shiftschema.schema import Schema
 from shiftschema import validators, filters
 from shiftuser import validators as user_validators
@@ -238,6 +237,23 @@ class User(db.Model):
         return str(self.id)
 
     # -------------------------------------------------------------------------
+    # Principal
+    # -------------------------------------------------------------------------
+
+    def provide_principal_needs(self):
+        """
+        Provide principal needs
+        Returns a list of principal needs this user satisfies to be added
+        to principal identity upon login. These are later used to check for
+        active permissions the user has.
+        :return: list
+        """
+        needs = [RoleNeed(role.handle) for role in self.roles]
+        if self.id:
+            needs.append(UserNeed(self.id))
+        return needs
+
+    # -------------------------------------------------------------------------
     # Login counter
     # -------------------------------------------------------------------------
 
@@ -302,7 +318,7 @@ class User(db.Model):
         email = self._email
         if not email:
             return None
-        
+
         address, host = email.split('@')
         if len(address) <= 2: return ('*' * len(address)) + '@' + host
 
