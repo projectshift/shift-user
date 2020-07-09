@@ -455,8 +455,9 @@ class UserServiceTests(BaseTestCase):
         with events.events.disconnect_receivers():
             user.email = 'updated@test.com'
             user_service.save(user)
-            res = user_service.confirm_email_with_link(user.email_link)
-            self.assertTrue(res)
+            with self.app.test_request_context():
+                res = user_service.confirm_email_with_link(user.email_link)
+                self.assertTrue(res)
 
         self.assertTrue(user.email_confirmed)
         self.assertIsNone(user.email_link)
@@ -469,7 +470,8 @@ class UserServiceTests(BaseTestCase):
             spy = mock.Mock()
             events.email_confirmed_event.connect(spy, weak=False)
             user_service.save(user)
-            user_service.confirm_email_with_link(user.email_link)
+            with self.app.test_request_context():
+                user_service.confirm_email_with_link(user.email_link)
             spy.assert_called_with(user)
 
     # -------------------------------------------------------------------------
