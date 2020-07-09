@@ -103,6 +103,14 @@ class UserService(AbstractService):
             events.login_failed_nonexistent_event.send()
             return False
 
+        # verify password first
+        verified = user.verify_password(password)
+        if not verified:
+            user.increment_failed_logins()
+            self.save(user)
+            events.login_failed_event.send(user)
+            return False
+
         # check for account being locked
         if user.is_locked():
             raise x.AccountLocked(locked_until=user.locked_until)
@@ -111,13 +119,6 @@ class UserService(AbstractService):
         is_new = user.email and not user.email_new
         if is_new and not user.email_confirmed and self.require_confirmation:
             raise x.EmailNotConfirmed(email=user.email_secure)
-
-        verified = user.verify_password(password)
-        if not verified:
-            user.increment_failed_logins()
-            self.save(user)
-            events.login_failed_event.send(user)
-            return False
 
         # login otherwise
         login_user(user=user, remember=remember)

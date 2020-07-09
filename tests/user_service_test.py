@@ -264,7 +264,7 @@ class UserServiceTests(BaseTestCase):
             user_service.save(user)
             with self.app.test_request_context():
                 with self.assertRaises(x.AccountLocked):
-                    user_service.login(user.email, 'BAD!')
+                    user_service.login(user.email, '123456')
 
     def test_login_fails_if_email_unconfirmed_for_new_users(self):
         """ Abort login if email is not confirmed for new users"""
@@ -272,7 +272,15 @@ class UserServiceTests(BaseTestCase):
             user = self.create_user(False)
             with self.app.test_request_context():
                 with self.assertRaises(x.EmailNotConfirmed):
-                    user_service.login(user.email, 'BAD!')
+                    user_service.login(user.email, '123456')
+
+    def test_login_validates_password_before_requiring_confirmation(self):
+        """ Validate password first before requiring account confirmation"""
+        with user_events.disconnect_receivers():
+            user = self.create_user(False)
+            with self.app.test_request_context():
+                result = user_service.login(user.email, 'BAD!')
+                self.assertFalse(result)
 
     def test_login_possible_if_email_unconfirmed_for_existing_users(self):
         """ Login possible if email is not confirmed for existing users"""
