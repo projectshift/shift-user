@@ -249,8 +249,6 @@ class User(db.Model):
         :return: list
         """
         needs = [RoleNeed(role.handle) for role in self.roles]
-        if self.id:
-            needs.append(UserNeed(self.id))
         return needs
 
     # -------------------------------------------------------------------------
