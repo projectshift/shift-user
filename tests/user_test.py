@@ -103,7 +103,7 @@ class UserTests(BaseTestCase):
         user = User()
         user.id = 123
         needs = user.provide_principal_needs()
-        self.assertEquals(2, len(needs))
+        self.assertEquals(1, len(needs))
         for need in needs:
             self.assertIsInstance(need, Need)
 
