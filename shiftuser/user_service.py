@@ -307,10 +307,9 @@ class UserService(AbstractService):
             user_id=user_id
         )
         token = jwt.encode(data, self.jwt_secret, algorithm=self.jwt_algo)
-        string_token = token.decode('utf-8')
-        user._token = string_token
+        user._token = token
         self.save(user)
-        return string_token
+        return token
 
     def default_token_user_loader(self, token):
         """
