@@ -112,7 +112,7 @@ setup(**dict(
         'passlib>=1.7.2,<1.8.0',
         'PyJWT>=2.0.0,<3.0.0',
         'Flask-Login>=0.5.0,<0.6.0',
-        'requests-oauthlib>=1.3.0,<2.0.0',
+        'requests-oauthlib>=1.1.0,<1.2.0',
         'Flask-OAuthlib>=0.9.6,<1.0.0',
         'Flask-Principal>=0.4.0,<0.5.0'
     ],
