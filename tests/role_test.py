@@ -31,6 +31,11 @@ class RoleTests(BaseTestCase):
         self.assertEqual(data['description'], role.description)
         self.assertIsNone(role.id)
 
+    def test_dont_implicitly_convert_handles_to_strings(self):
+        """ REGRESSION: do not implicitly convert role handles to strings """
+        role = Role(handle=None)
+        self.assertEquals(None, role.handle)
+
     def test_get_role_as_dict(self):
         """ Get get a dictionary representation of role"""
         role = Role(**self.data)
@@ -49,7 +54,7 @@ class RoleTests(BaseTestCase):
     def test_process_role_with_schema(self):
         """ Processing role with schema """
         data = dict(
-            handle = '   HA   ',
+            handle='   HA   ',
             title='  Role title   ',
             description='  Role description   '
         )

@@ -71,7 +71,9 @@ class Role(db.Model):
 
     @handle.setter
     def handle(self, value):
-        self._handle = str(value).lower()
+        if type(value) is str:
+            value = str(value).lower()
+        self._handle = value
 
     @property
     def users(self):
