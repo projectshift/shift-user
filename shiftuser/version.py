@@ -1,2 +1,2 @@
-# current boiler version
-version = '1.0.14'
+# current version
+version = '1.0.15'

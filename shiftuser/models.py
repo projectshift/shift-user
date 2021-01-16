@@ -150,7 +150,7 @@ class User(db.Model):
     instagram_id = db.Column(db.String(50), unique=True, index=True)
 
     # roles
-    __roles = db.relationship('Role', secondary=UserRoles, lazy='select')
+    _roles = db.relationship('Role', secondary=UserRoles, lazy='select')
 
     # -------------------------------------------------------------------------
     # Public API
@@ -434,12 +434,12 @@ class User(db.Model):
             err = 'Role must be valid and saved before adding to user'
             raise x.UserException(err)
 
-        self.__roles.append(role)
+        self._roles.append(role)
 
     def remove_role(self, role):
         """ Remove role from user """
-        if role in self.__roles:
-            self.__roles.remove(role)
+        if role in self._roles:
+            self._roles.remove(role)
 
     def has_role(self, role_or_handle):
         """ Checks if user has role """
@@ -457,7 +457,7 @@ class User(db.Model):
     @property
     def roles(self):
         """ Roles accessor """
-        roles = list(self.__roles)
+        roles = list(self._roles)
         default_role = Role(
             handle='user',
             title='User role',
