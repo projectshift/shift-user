@@ -384,7 +384,7 @@ class UserService(AbstractService):
         events.register_event.send(user)
         return user
 
-    def send_welcome_message(self, user, base_url):
+    def send_welcome_message(self, user, base_url, **kwargs):
         """ Send welcome mail with email confirmation link """
         if not self.require_confirmation and not self.welcome_message:
             return
@@ -408,7 +408,8 @@ class UserService(AbstractService):
             url=base_url.rstrip('/'),
             link=user.email_link
         )
-        data = dict(link=link)
+        data = kwargs
+        data['link'] = link
 
         # render message
         if self.require_confirmation:
@@ -496,7 +497,7 @@ class UserService(AbstractService):
         events.email_update_requested_event.send(user)
         return user
 
-    def send_email_changed_message(self, user, base_url):
+    def send_email_changed_message(self, user, base_url, **kwargs):
         """ Send email change confirmation message """
         subject = 'Confirm new email'
         if 'email_change' in self.email_subjects.keys():
@@ -508,7 +509,9 @@ class UserService(AbstractService):
             url=base_url.rstrip('/'),
             link=user.email_link
         )
-        data = dict(link=link)
+        data = kwargs
+        data['link'] = link
+
         html = render_template('mail/email-change-confirm.html', **data)
         txt = render_template('mail/email-change-confirm.txt', **data)
 
@@ -562,7 +565,7 @@ class UserService(AbstractService):
         events.password_changed_event.send(user)
         return user
 
-    def send_password_change_message(self, user, base_url):
+    def send_password_change_message(self, user, base_url, **kwargs):
         """ Send password change message"""
         subject = 'Change your password here'
         if 'password_change' in self.email_subjects.keys():
@@ -574,7 +577,9 @@ class UserService(AbstractService):
             url=base_url.rstrip('/'),
             link=user.password_link
         )
-        data = dict(link=link)
+        data = kwargs
+        data['link'] = link
+
         html = render_template('mail/password-change.html', **data)
         txt = render_template('mail/password-change.txt', **data)
 
