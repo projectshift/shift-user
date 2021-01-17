@@ -121,6 +121,9 @@ class User(db.Model):
     as it will try to pull config settings from current_app.config.
     """
 
+    email_link_expires_in = 24     # hours
+    password_link_expires_in = 24  # hours
+
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     created = db.Column(db.DateTime)
 
@@ -346,7 +349,8 @@ class User(db.Model):
         self.email_confirmed = False
         self.email_link = self.generate_hash(50)
         now = datetime.datetime.utcnow()
-        self.email_link_expires = now + datetime.timedelta(hours=24)
+        expiration = self.email_link_expires_in
+        self.email_link_expires = now + datetime.timedelta(hours=expiration)
 
     def confirm_email(self):
         """ Confirm email """
@@ -371,7 +375,8 @@ class User(db.Model):
 
     def email_link_expired(self, now=None):
         """ Check if email link expired """
-        if not now: now = datetime.datetime.utcnow()
+        if not now:
+            now = datetime.datetime.utcnow()
         return self.email_link_expires < now
 
     # -------------------------------------------------------------------------
@@ -403,11 +408,13 @@ class User(db.Model):
         """ Generates a link to reset password """
         self.password_link = self.generate_hash(50)
         now = datetime.datetime.utcnow()
-        self.password_link_expires = now + datetime.timedelta(hours=24)
+        expiration = self.password_link_expires_in
+        self.password_link_expires = now + datetime.timedelta(hours=expiration)
 
     def password_link_expired(self, now=None):
         """ Check if password link expired """
-        if not now: now = datetime.datetime.utcnow()
+        if not now:
+            now = datetime.datetime.utcnow()
         return self.password_link_expires < now
 
     # -------------------------------------------------------------------------
