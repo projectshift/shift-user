@@ -41,7 +41,7 @@ class RoleSchema(Schema):
 
 class Role(db.Model):
     _handle = db.Column('handle', db.String(128), nullable=False, unique=True)
-    __users = db.relation('User', secondary=UserRoles, lazy='select')
+    _users = db.relation('User', secondary=UserRoles, lazy='select')
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     title = db.Column(db.String(256))
     description = db.Column(db.String(256))
@@ -78,7 +78,7 @@ class Role(db.Model):
     @property
     def users(self):
         """ Users accessor """
-        return tuple(self.__users)
+        return tuple(self._users)
 
 
 # -----------------------------------------------------------------------------
