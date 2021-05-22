@@ -9,9 +9,8 @@ import logging
 
 from shiftuser import exceptions as x
 from shiftuser.session_interface import SessionInterface
-from shiftuser.services import login_manager, oauth, principal
+from shiftuser.services import login_manager, principal
 from shiftuser.services import user_service
-from shiftuser.util.oauth_providers import OauthProviders
 
 
 def user_feature(app):
@@ -45,16 +44,6 @@ def user_feature(app):
     @login_manager.user_loader
     def load_user(id):
         return user_service.get(id)
-
-    # init OAuth
-    oauth.init_app(app)
-    registry = OauthProviders(app)
-    providers = registry.get_providers()
-    with app.app_context():
-        for provider in providers:
-            if provider not in oauth.remote_apps:
-                oauth.remote_app(provider, **providers[provider])
-                registry.register_token_getter(provider)
 
     # init principal
     principal.init_app(app)

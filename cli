@@ -1,6 +1,15 @@
 #!/usr/bin/env python3
 import click
 from shiftuser.cli import user_cli
+from boiler.cli import cli as boiler_cli
+from boiler.cli import db
+
+# add orm cli
+user_cli.add_command(db.cli, name='db')
+
+user_cli.add_command(boiler_cli.run, name='run')
+
+
 
 
 # -----------------------------------------------------------------------------
@@ -32,18 +41,6 @@ def test(nose_argsuments):
     params = ['__main__', '-c', 'nose.ini']
     params.extend(nose_argsuments)
     run(argv=params)
-
-
-@user_cli.command(name='build')
-def build():
-    """ Build with setuptools"""
-    pass
-
-
-@user_cli.command(name='publish')
-def publish():
-    """ Publish to PyPI with twine"""
-    pass
 
 # -----------------------------------------------------------------------------
 # And run

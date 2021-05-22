@@ -13,32 +13,6 @@ class UserConfig:
     PASSLIB_ALGO = 'bcrypt'
     PASSLIB_SCHEMES = ['bcrypt', 'md5_crypt']
 
-    # oauth keys
-    USER_OAUTH = {
-        'facebook': {
-            'id': 'app-id',
-            'secret': 'app-seceret',
-            'scope': 'email',
-        },
-        'vkontakte': {
-            'id': 'app-id',
-            'secret': 'service-access-key',
-            'scope': 'email',
-            'offline': True
-        },
-        'google': {
-            'id': 'app-id',
-            'secret': 'app-secret',
-            'scope': 'email',
-            'offline': True
-        },
-        'instagram': {
-            'id': 'app-id',
-            'secret': 'app-secret',
-            'scope': 'basic'
-        },
-    }
-
     # jwt
     USER_JWT_SECRET = os.environ.get('APP_USER_JWT_SECRET')
     USER_JWT_ALGO = 'HS256'

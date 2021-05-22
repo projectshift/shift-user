@@ -1,12 +1,8 @@
-from unittest import mock
 from nose.plugins.attrib import attr
 from tests.base_testcase import BaseTestCase
 
-import jwt
 from datetime import datetime, timedelta
 from flask_principal import Need
-from boiler.config import DefaultConfig
-from boiler import bootstrap
 from shiftuser.models import User, Role
 from shiftuser import events, exceptions as x
 from shiftuser.services import role_service
@@ -71,10 +67,6 @@ class UserTests(BaseTestCase):
         self.assertIsInstance(data['locked_until'], datetime)
         self.assertIn('email', data)
         self.assertFalse(data['email_confirmed'])
-        self.assertIn('facebook_id', data)
-        self.assertIn('google_id', data)
-        self.assertIn('vkontakte_id', data)
-        self.assertIn('instagram_id', data)
         self.assertIn('roles', data)
         self.assertEqual(0, len(data['roles']))
 
@@ -345,17 +337,6 @@ class UserTests(BaseTestCase):
 
         user.password_link_expires = datetime.utcnow() - timedelta(days=2)
         self.assertTrue(user.password_link_expired())
-
-    # -------------------------------------------------------------------------
-    # Social
-    # -------------------------------------------------------------------------
-
-    def test_check_if_has_provider_credentials(self):
-        """ Can check if user has social provide credentials """
-        user = User(**self.data)
-        user.facebook_id = 123
-        self.assertTrue(user.has_social('facebook'))
-        self.assertFalse(user.has_social('google'))
 
     # -------------------------------------------------------------------------
     # Roles

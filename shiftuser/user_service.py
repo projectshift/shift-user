@@ -175,20 +175,6 @@ class UserService(AbstractService):
 
         return True
 
-    def attempt_social_login(self, provider, id):
-        """ Attempt social login and return boolean result """
-        if not provider or not id:
-            return False
-
-        params = dict()
-        params[provider.lower() + '_id'] = id
-        user = self.first(**params)
-        if not user:
-            return False
-
-        self.force_login(user)
-        return True
-
     # -------------------------------------------------------------------------
     # JWT tokens
     # -------------------------------------------------------------------------

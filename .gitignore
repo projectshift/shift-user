@@ -37,5 +37,6 @@ www.esproj
 /.env
 /dist.env
 /boil
+/migrations
 
 

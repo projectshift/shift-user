@@ -3,7 +3,8 @@ wheel
 twine
 
 # users
-shiftboiler>=0.11.0,<0.12.0
+shiftschema>=0.3.0,<0.4.0
+shiftboiler>=0.11.1,<0.12.0
 bcrypt>=3.2.0,<4.0.0
 passlib>=1.7.4,<1.8.0
 PyJWT>=2.1.0,<3.0.0
@@ -28,7 +29,7 @@ pyOpenSSL>=20.0.1,<21.0.0
 # orm
 Flask-SQLAlchemy>=2.5.1,<2.6.0
 alembic>=1.6.2,<2.0.0
-mysql-connector-python>=8.0.25,<9.0.0
+mysqlclient>=2.0.3,<3.0.0
 
 # mail
 Flask-Mail>=0.9.1,<1.0.0

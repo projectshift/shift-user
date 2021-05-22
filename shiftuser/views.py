@@ -4,7 +4,7 @@ from flask.views import View
 from flask import flash, redirect, render_template, url_for, abort, request
 from flask import current_app
 from flask import session
-from flask_login import current_user, login_required
+from flask_login import current_user
 
 from shiftuser import forms
 from shiftuser.models import RegisterSchema, UpdateSchema
@@ -51,7 +51,8 @@ class Logout(View):
 
     def dispatch_request(self):
         user_service.logout()
-        if self.flash: flash(self.logout_message, 'success')
+        if self.flash:
+            flash(self.logout_message, 'success')
         return redirect(self.redirect)
 
 
@@ -69,7 +70,8 @@ class Login(View):
 
     def dispatch_request(self):
         if current_user.is_authenticated:
-            if self.flash: flash(self.valid_message, 'success')
+            if self.flash:
+                flash(self.valid_message, 'success')
             return redirect(self.redirect)
 
         next_redirect = self.redirect
@@ -85,10 +87,12 @@ class Login(View):
                     form.remember.data
                 )
                 if ok:
-                    if self.flash: flash(self.valid_message, 'success')
+                    if self.flash:
+                        flash(self.valid_message, 'success')
                     return redirect(next_redirect)
                 else:
-                    if self.flash: flash(self.invalid_message, 'danger')
+                    if self.flash:
+                        flash(self.invalid_message, 'danger')
             except x.AccountLocked as locked:
                 if self.flash:
                     flash(self.lock_msg.format(locked.locked_until), 'danger')
@@ -101,18 +105,6 @@ class Login(View):
             params = params.update(additional)
 
         return render_template(self.template, **params)
-
-
-class SocialLogin(View):
-    """ Base view for social authentication options """
-    template = 'login-social.j2'
-    redirect = '/'
-
-    def dispatch_request(self):
-        if current_user.is_authenticated:
-            return redirect(self.redirect)
-
-        return render_template(self.template)
 
 
 # -----------------------------------------------------------------------------
@@ -164,11 +156,13 @@ class Register(View):
                 return redirect(url_for(self.redirect_success_endpoint))
             else:
                 user_service.force_login(user)
-                if self.flash: flash(self.force_login_message, 'success')
+                if self.flash:
+                    flash(self.force_login_message, 'success')
                 return redirect(self.force_login_redirect)
 
         elif form.is_submitted():
-            if self.flash: flash(self.invalid_message, 'danger')
+            if self.flash:
+                flash(self.invalid_message, 'danger')
 
         params = dict(form=form)
         if self.params:
@@ -209,7 +203,7 @@ class ConfirmEmailRequest(View):
     user_not_found_message = 'Sorry, no such user found.'
     already_confirmed_endpoint = 'user.confirm.email.resend.already_confirmed'
     already_confirmed_params = dict()
-    confirm_endpoint = 'user.confirm.email.request' # we'll append link later
+    confirm_endpoint = 'user.confirm.email.request'  # we'll append link later
     confirm_params = dict()
     ok_endpoint = 'user.confirm.email.resend.ok'
     ok_params = dict()
@@ -229,11 +223,13 @@ class ConfirmEmailRequest(View):
                 email = form.email.data
                 user = user_service.first(email=email)
                 if not user:
-                    if self.flash: flash(self.user_not_found_message, 'danger')
+                    if self.flash:
+                        flash(self.user_not_found_message, 'danger')
                     return render_template(self.template, form=form)
             else:
                 if form.is_submitted():
-                    if self.flash: flash(self.form_invalid_message, 'danger')
+                    if self.flash:
+                        flash(self.form_invalid_message, 'danger')
 
                 return render_template(self.template, form=form)
 
@@ -294,10 +290,12 @@ class ConfirmEmail(View):
         except x.EmailLinkExpired:
             return redirect(url_for(self.expired_endpoint, id=id))
 
-        if not ok: abort(404)
+        if not ok:
+            abort(404)
         user_service.force_login(ok)
         session.pop('_flashes', None)
-        if self.flash: flash(self.confirmed_message, 'success')
+        if self.flash:
+            flash(self.confirmed_message, 'success')
         return redirect(self.redirect)
 
 
@@ -333,13 +331,15 @@ class RecoverPasswordRequest(View):
 
             user = user_service.first(email=form.email.data)
             if not user:
-                if self.flash: flash(self.not_found_message, 'danger')
+                if self.flash:
+                    flash(self.not_found_message, 'danger')
             else:
                 user_service.request_password_reset(user, base_url)
                 url = url_for(self.ok_redirect, **self.ok_redirect_params)
                 return redirect(url)
         elif form.is_submitted():
-            if self.flash: flash(self.invalid_message, 'danger')
+            if self.flash:
+                flash(self.invalid_message, 'danger')
 
         params = dict(form=form)
         if self.params:
@@ -377,7 +377,8 @@ class RecoverPassword(View):
 
     def dispatch_request(self, link=None):
         user = user_service.first(password_link=link)
-        if not user: abort(404)
+        if not user:
+            abort(404)
 
         if user.password_link_expired():
             params = dict()
@@ -390,11 +391,13 @@ class RecoverPassword(View):
             user_service.change_password(user, new_password)
             params = dict()
             params.update(self.ok_redirect_params)
-            if self.flash: flash(self.ok_message, 'success')
+            if self.flash:
+                flash(self.ok_message, 'success')
             return redirect(url_for(self.ok_redirect, **params))
 
         elif form.is_submitted():
-            if self.flash: flash(self.invalid_message, 'danger')
+            if self.flash:
+                flash(self.invalid_message, 'danger')
 
         params = dict(form=form)
         if self.params:

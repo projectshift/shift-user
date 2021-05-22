@@ -15,11 +15,10 @@
                 {% if myself %}
                 <div class="navigation">
                     <ul class="nav nav-tabs">
-                        {% for item in nav.profile %}
-                        <li class="{{ 'active' if item.is_active else '' }}">
-                            <a href="{{ item.url }}">{{ item.label }}</a>
-                        </li>
-                        {% endfor %}
+                        <li><a href="{{ url_for('user.profile.home', id=current_user.id) }}">Profile home</a></li>
+                        <li class="active"><a href="{{ url_for('user.profile.email', id=current_user.id) }}">Change Email</a></li>
+                        <li><a href="{{ url_for('user.profile.password', id=current_user.id) }}">Manage Password</a></li>
+                        <li><a href="{{ url_for('user.logout') }}">Logout</a></li>
                     </ul>
                 </div>
                 {% endif %}

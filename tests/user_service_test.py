@@ -4,7 +4,6 @@ from tests.base_testcase import BaseTestCase
 
 import jwt
 from datetime import datetime, timedelta
-from flask import session
 from flask_login import current_user
 from shiftschema.result import Result
 
@@ -212,25 +211,6 @@ class UserServiceTests(BaseTestCase):
 
             current_user = None  # None, since mocked
             spy.assert_called_with(current_user)
-
-    def test_attempts_social_login(self):
-        """ Attempting login with social user profile """
-        user = self.create_user()
-        with user_events.disconnect_receivers():
-            facebook_id = '123456790'
-            user.facebook_id = facebook_id
-            user_service.save(user)
-
-            self.assertFalse(user_service.attempt_social_login(
-                'facebook',
-                facebook_id + 'BAD'
-            ))
-
-            with self.app.test_request_context():
-                self.assertTrue(user_service.attempt_social_login(
-                    'facebook',
-                    facebook_id
-                ))
 
     # -------------------------------------------------------------------------
     # Account locks and counting bad logins

@@ -146,12 +146,6 @@ class User(db.Model):
     # token
     _token = db.Column('token', db.Text())
 
-    # social ids
-    facebook_id = db.Column(db.String(50), unique=True, index=True)
-    google_id = db.Column(db.String(50), unique=True, index=True)
-    vkontakte_id = db.Column(db.String(50), unique=True, index=True)
-    instagram_id = db.Column(db.String(50), unique=True, index=True)
-
     # roles
     _roles = db.relationship('Role', secondary=UserRoles, lazy='select')
 
@@ -184,10 +178,6 @@ class User(db.Model):
             locked_until=self.locked_until,
             email=self.email_secure,
             email_confirmed=self.email_confirmed,
-            facebook_id=self.facebook_id,
-            google_id=self.google_id,
-            vkontakte_id=self.vkontakte_id,
-            instagram_id=self.instagram_id,
             roles=[]
         )
 
@@ -416,14 +406,6 @@ class User(db.Model):
         if not now:
             now = datetime.datetime.utcnow()
         return self.password_link_expires < now
-
-    # -------------------------------------------------------------------------
-    # Social
-    # -------------------------------------------------------------------------
-
-    def has_social(self, network):
-        """ Check if user has social credentials """
-        return bool(getattr(self, network.lower() + '_id'))
 
     # -------------------------------------------------------------------------
     # Roles
