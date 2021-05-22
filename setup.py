@@ -106,15 +106,14 @@ setup(**dict(
 
     # # project dependencies
     install_requires=[
-        'shiftboiler>=0.10.0,<1.0.0',
-        'click>=7.1.2,<8.0.0',
-        'bcrypt>=3.1.7,<4.0.0',
-        'passlib>=1.7.2,<1.8.0',
-        'PyJWT>=2.0.0,<3.0.0',
+        'shiftboiler>=0.11.0,<0.12.0',
+        'click>=8.0.0,<9.0.0',
+        'bcrypt>=3.2.0,<4.0.0',
+        'passlib>=1.7.4,<1.8.0',
+        'PyJWT>=2.1.0,<3.0.0',
         'Flask-Login>=0.5.0,<0.6.0',
-        'requests-oauthlib>=1.1.0,<1.2.0',
-        'Flask-OAuthlib>=0.9.6,<1.0.0',
-        'Flask-Principal>=0.4.0,<0.5.0'
+        'Flask-Principal>=0.4.0,<0.5.0',
+        'Flask-Mail>=0.9.1,<1.0.0',
     ],
 
 
