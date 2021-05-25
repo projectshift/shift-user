@@ -41,7 +41,7 @@ class RoleSchema(Schema):
 
 class Role(db.Model):
     _handle = db.Column('handle', db.String(128), nullable=False, unique=True)
-    _users = db.relation('User', secondary=UserRoles, lazy='select')
+    _users = db.relation('User', secondary=UserRoles, lazy='select', back_populates='_roles')
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     title = db.Column(db.String(256))
     description = db.Column(db.String(256))
@@ -147,7 +147,12 @@ class User(db.Model):
     _token = db.Column('token', db.Text())
 
     # roles
-    _roles = db.relationship('Role', secondary=UserRoles, lazy='select')
+    _roles = db.relationship(
+        'Role',
+        secondary=UserRoles,
+        lazy='select',
+        back_populates='_users'
+    )
 
     # -------------------------------------------------------------------------
     # Public API
